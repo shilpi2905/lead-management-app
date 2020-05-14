@@ -38,6 +38,16 @@ public class LeadEntity implements Serializable {
 	private String locationString;
 	@Column(name = "status")
 	private String status;
+	@Column(name = "communication")
+	private String communication;
+	
+	public String getCommunication() {
+		return communication;
+	}
+
+	public void setCommunication(String communication) {
+		this.communication = communication;
+	}
 
 	public int getLeadId() {
 		return leadId;

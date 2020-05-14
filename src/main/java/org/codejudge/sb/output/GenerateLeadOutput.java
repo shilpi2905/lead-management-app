@@ -21,6 +21,17 @@ public class GenerateLeadOutput {
 	private String location;
 	@JsonProperty("status")
 	private StatusCode status;
+	@JsonProperty("communication")
+	private String communication;
+
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public String getCommunication() {
+		return communication;
+	}
+
+	public void setCommunication(String communication) {
+		this.communication = communication;
+	}
 
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public Integer getLeadId() {

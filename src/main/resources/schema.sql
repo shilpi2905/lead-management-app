@@ -8,6 +8,6 @@ CREATE TABLE LEADS (
   email VARCHAR(200) NOT NULL UNIQUE,
   location_type VARCHAR(250) NOT NULL,
   location_string VARCHAR(500) NOT NULL,
-  status VARCHAR(200) NOT NULL
- 
+  status VARCHAR(200) NOT NULL,
+  communication VARCHAR(500)
 );

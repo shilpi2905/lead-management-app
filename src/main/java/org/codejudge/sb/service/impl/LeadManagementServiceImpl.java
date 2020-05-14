@@ -60,6 +60,9 @@ public class LeadManagementServiceImpl implements LeadManagementService {
 		output.setLocationType(leadEntity.getLocationType());
 		output.setLocation(leadEntity.getLocationString());
 		output.setStatus(StatusCode.valueOf(leadEntity.getStatus()));
+		if(leadEntity.getCommunication() != null) {
+			output.setCommunication(leadEntity.getCommunication());
+		}
 		return output;
 		
 	}
@@ -104,6 +107,7 @@ public class LeadManagementServiceImpl implements LeadManagementService {
 		checkIfLeadExist(leadId);
 		LeadEntity leadEntity = leadRepository.findById(leadId).get();
 		leadEntity.setStatus(StatusCode.Contacted.toString());
+		leadEntity.setCommunication(markLeadInput.getCommunication());
 		LeadStatusOutput output = new LeadStatusOutput();
 		LeadEntity lead = leadRepository.save(leadEntity);
 		log.info("marked lead:: {}", leadRepository.findById(lead.getLeadId()));
