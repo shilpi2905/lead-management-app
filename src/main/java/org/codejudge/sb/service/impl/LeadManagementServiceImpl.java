@@ -12,6 +12,7 @@ import org.codejudge.sb.output.StatusCode;
 import org.codejudge.sb.service.LeadManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class LeadManagementServiceImpl implements LeadManagementService {
 			return generateLeadOutput(lead, true);
 		} catch (DataIntegrityViolationException ex) {
 			throw new CommonException(
-					new Error("failure", "Mobile or email provided for this lead is already registered"));
+					new Error("failure", "Mobile or email provided for this lead is already registered"), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -85,7 +86,7 @@ public class LeadManagementServiceImpl implements LeadManagementService {
 	private void checkIfLeadExist(Integer leadId) {
 		if(!leadRepository.findById(leadId).isPresent()) {
 			throw new CommonException(
-					new Error("failure", "Error: Lead with id: "+leadId+" does not exist"));
+					new Error("failure", "Error: Lead with id: "+leadId+" does not exist"), HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -106,7 +107,7 @@ public class LeadManagementServiceImpl implements LeadManagementService {
 		LeadStatusOutput output = new LeadStatusOutput();
 		LeadEntity lead = leadRepository.save(leadEntity);
 		log.info("marked lead:: {}", leadRepository.findById(lead.getLeadId()));
-		output.setStatus("success");
+		output.setStatus(lead.getStatus());
 		output.setCommunication(markLeadInput.getCommunication());
 		return output;
 	}

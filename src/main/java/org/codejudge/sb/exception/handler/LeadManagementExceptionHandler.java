@@ -27,7 +27,10 @@ public class LeadManagementExceptionHandler {
 	@ExceptionHandler({ CommonException.class })
 	public ResponseEntity<Object> handleCommonException(CommonException exception) {
 		log.error("CommonException occurred: {}", exception.getError().getReason());
-		return new ResponseEntity<Object>(exception.getError(), HttpStatus.BAD_REQUEST);
+		if(exception.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+			return new ResponseEntity<Object>("{}", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Object>(exception.getError(), exception.getStatusCode());
 	}
 	
 	@ExceptionHandler({ HttpMessageNotReadableException.class })
